@@ -1,14 +1,13 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
 import connectDB from "./src/config/db.js";
 import authRoutes from "./src/routes/auth.js";
 
 // Load env variables
 dotenv.config();
-
-// Connect to Database
-connectDB();
 
 const app = express();
 
@@ -40,8 +39,20 @@ if (process.env.NODE_ENV === "production") {
 }
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(
-    `Server running in ${process.env.NODE_ENV || "development"} mode on port ${PORT}`,
-  );
-});
+
+const startServer = async () => {
+  try {
+    await connectDB();
+  } catch (error) {
+    console.error(`Error connecting to MongoDB: ${error.message}`);
+    process.exit(1);
+  }
+
+  app.listen(PORT, () => {
+    console.log(
+      `Server running in ${process.env.NODE_ENV || "development"} mode on port ${PORT}`,
+    );
+  });
+};
+
+startServer();
