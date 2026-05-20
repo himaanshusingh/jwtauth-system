@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(
-      `${process.env.MONGO_URI}/jwt-auth-system`,
+      `${process.env.MONGO_URI}/jwtauth-system`,
     );
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {

@@ -1,5 +1,5 @@
 {
-  "name": "secureauth-hub",
+  "name": "jwtauth-system",
   "version": "1.0.0",
   "description": "MERN Stack Role-Based Access Control JWT Authentication System",
   "private": true,

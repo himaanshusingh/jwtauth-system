@@ -3,18 +3,14 @@ import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import { protect } from "../middleware/auth.js";
 
-const router = express.Router();
-
-// Generate JWT Helper
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: "30d",
   });
 };
 
-// @desc    Register a new user
-// @route   POST /api/auth/register
-// @access  Public
+const router = express.Router();
+
 router.post("/register", async (req, res) => {
   const { email, password, fullName, role } = req.body;
 
@@ -52,9 +48,6 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// @desc    Authenticate user & get token
-// @route   POST /api/auth/login
-// @access  Public
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
@@ -86,9 +79,6 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// @desc    Get current user profile
-// @route   GET /api/auth/me
-// @access  Private
 router.get("/me", protect, async (req, res) => {
   try {
     const user = await User.findById(req.user._id).select("-password");
