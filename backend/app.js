@@ -9,6 +9,9 @@ import authRoutes from "./src/routes/auth.js";
 // Load env variables
 dotenv.config();
 
+// Connecting DB
+connectDB();
+
 const app = express();
 
 // Middlewares
@@ -40,19 +43,8 @@ if (process.env.NODE_ENV === "production") {
 
 const PORT = process.env.PORT || 3000;
 
-const startServer = async () => {
-  try {
-    await connectDB();
-  } catch (error) {
-    console.error(`Error connecting to MongoDB: ${error.message}`);
-    process.exit(1);
-  }
-
-  app.listen(PORT, () => {
-    console.log(
-      `Server running in ${process.env.NODE_ENV || "development"} mode on port ${PORT}`,
-    );
-  });
-};
-
-startServer();
+app.listen(PORT, () => {
+  console.log(
+    `Server running in ${process.env.NODE_ENV || "development"} mode on port ${PORT}`,
+  );
+});
